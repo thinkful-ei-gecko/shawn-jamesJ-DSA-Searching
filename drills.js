@@ -141,23 +141,142 @@ function postOrder(bst) {
   return postOrderArr
 }
 
+//6.)  
+
+/*
+             Captain Picard
+             /                \
+    Commander Riker       Commander Data
+      /         \               \
+ Lt. Cmdr.   Lt. Cmdr.          Lt. Cmdr.
+ Worf        LaForge            Crusher
+   /                           /
+Lieutenant                  Lieutenant
+security-officer            Selar
+
+
+OUTPUT:  Picard, Riker, Data, Worf, LaForge, Crusher, Sec off, Selar
+            5     3       6     2       4         7        1      8
+*/
+
+let crew = [
+  {key:5, value:'Captain Picard'}, 
+  {key:3, value:'Commander Riker'},
+  {key:6, value:'Commander Data'},
+  {key:2, value:'Lt. Commander Worf'},
+  {key:4, value:'Lt. Commander LaForge'},
+  {key:7, value:'Lt. Commander Crusher'},
+  {key:1, value:'Lieutenant Security-Officer'},
+  {key:8, value:'Lieutenant Selar'}
+ 
+]
+
+
+// function coc(bst, results=[]){
+//   if(!bst){
+//     return [];
+//   }
+//   results = [bst.value]
+//   if(bst.left && bst.right){
+//     results = [...results, bst.left.value, bst.right.value]
+//     coc(bst.left, results)
+//     coc(bst.right, results)
+
+//   }else if(bst.left && !bst.right){
+//     results = [...results, bst.left.value]
+//     coc(bst.left.left, results)
+//     coc(bst.left.right, results)
+//   }
+
+// }
+
+const Queue = require('./Queue');
+
+function coc(bst) {
+
+  let values = []
+  const Q = new Queue()
+  
+  Q.enqueue(bst)
+
+  //console.log(Q.first)
+
+  while (Q.first) {
+    let node = Q.dequeue()
+    //console.log(node.value.value)
+    values.push(node.value)
+    
+    if (node.left){
+      Q.enqueue(node.left)
+    }
+    if (node.right){
+      Q.enqueue(node.right)
+    }
+  }
+  return values
+
+  
+
+  // if(!bst){
+  //   return;
+  // }
+  // if (!bst.left && !bst.right) {
+  //   return [bst.value]
+  // }
+
+  // if (bst.left && bst.right) {
+  //   return [bst.value, bst.left.value, bst.right.value, ...coc(bst.left.left), ...coc(bst.left.right), ...coc(bst.right.left), ...coc(bst.right.right)]
+  // }
+  // if (bst.left && !bst.right) {
+  //   return [bst.value, bst.left.value, ...coc(bst.left.left), ...coc(bst.left.right)]
+  // }
+  // if (!bst.left && bst.right) {
+  //   return [bst.value, bst.right.value, ...coc(bst.right.left), ...coc(bst.right.right)]
+  // }
+}
+
+
+
+
 function main(){
 
-  console.log(findBook('JavaScript: The Definitive Guide', trim('005.2762', library)))
+  //console.log(findBook('JavaScript: The Definitive Guide', trim('005.2762', library)))
+
+  let crewBST = new BST()
+  for (let i = 0; i < crew.length; i++) {
+    crewBST.insert(crew[i].key, crew[i].value)
+  }
+
+  //console.log(crewBST.key);
+  console.log(coc(crewBST))
+
   let dataBST = new BST()
   for (let i = 0; i < data.length; i++) {
     dataBST.insert(data[i])
   }
 
-  console.log(preOrder(dataBST))
-  console.log(inOrder(dataBST))
-  console.log(postOrder(dataBST))
+  //console.log(coc(crewBST));
+
+  //console.log(preOrder(dataBST))
+  //console.log(inOrder(dataBST))
+  //console.log(postOrder(dataBST))
 
 
 
 }
 
 main()
+
+
+
+
+
+
+
+
+
+
+
 
 
 /*
