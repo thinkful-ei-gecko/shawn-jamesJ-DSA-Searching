@@ -71,9 +71,89 @@ function findBook(title, library, start = 0, end = library[library.length-1]){
 }
 
 
+// 4) Searching in BST
+
+// 1) 14, 19, 15, 27, 25, 79, 90, 91, 89, 35
+// 2) 8, 6, 5, 7, 10, 9, 11
+
+// 5) Implement different tree traversals
+let data = [25, 15, 50, 10, 24, 35, 70, 4, 12, 18, 31, 44, 66, 90, 22]
+
+
+// node, left, right
+function preOrder(bst) {
+  if (!bst.left && !bst.right) {
+    return [bst.key]
+  }
+
+  if (bst.left && bst.right) {
+    return [bst.key, ...preOrder(bst.left), ...preOrder(bst.right)]
+  }
+  if (bst.left && !bst.right) {
+    return [bst.key, ...preOrder(bst.left)]
+  }
+  if (!bst.left && bst.right) {
+    return [bst.key, ...preOrder(bst.right)]
+  }
+}
+
+// left, node, right
+function inOrder(bst) {
+  let inOrderArr = []
+  // if (!bst.left && !bst.right) {
+  //   inOrderArr = [...inOrderArr, bst.key]
+  // }
+
+  if (bst.left) {
+    inOrderArr = [...inOrder(bst.left)]
+  }
+
+  if (bst.key) {
+    inOrderArr = [...inOrderArr, bst.key]
+  }
+  
+  if (bst.right) {
+    inOrderArr = [...inOrderArr, ...inOrder(bst.right)]
+  }
+
+  return inOrderArr
+}
+
+// left, right, node
+function postOrder(bst) {
+  let postOrderArr = []
+  // if (!bst.left && !bst.right) {
+  //   inOrderArr = [...inOrderArr, bst.key]
+  // }
+
+  if (bst.left) {
+    postOrderArr = [...postOrder(bst.left)]
+  }
+  
+  if (bst.right) {
+    postOrderArr = [...postOrderArr, ...postOrder(bst.right)]
+  }
+
+  if (bst.key) {
+    postOrderArr = [...postOrderArr, bst.key]
+  }
+
+  return postOrderArr
+}
+
 function main(){
 
   console.log(findBook('JavaScript: The Definitive Guide', trim('005.2762', library)))
+  let dataBST = new BST()
+  for (let i = 0; i < data.length; i++) {
+    dataBST.insert(data[i])
+  }
+
+  console.log(preOrder(dataBST))
+  console.log(inOrder(dataBST))
+  console.log(postOrder(dataBST))
+
+
 
 }
 
